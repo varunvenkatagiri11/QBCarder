@@ -52,7 +52,7 @@ function App() {
   return (
     <div className="app">
       <header className="app-header">
-        <h1>TossupFlash</h1>
+                      <h1>QBCarder</h1>
         <p>Generate educational flashcards from Quiz Bowl questions and Wikipedia</p>
       </header>
 
