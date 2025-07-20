@@ -1,8 +1,8 @@
-# 📚 TossupCreator (TossupFlash)
+# 📚 QBCarder
 
 **Generate educational flashcards from Quiz Bowl questions and Wikipedia content**
 
-TossupCreator is a full-stack web application that automatically creates educational flashcards by analyzing Quiz Bowl tossup questions and enriching them with Wikipedia summaries. Perfect for students, educators, and Quiz Bowl enthusiasts who want to study key concepts in an interactive way.
+QBCarder is a full-stack web application that automatically creates educational flashcards by analyzing Quiz Bowl tossup questions and enriching them with Wikipedia summaries. Perfect for students, educators, and Quiz Bowl enthusiasts who want to study key concepts in an interactive way.
 
 ![Version](https://img.shields.io/badge/version-1.0.0-blue.svg)
 ![Java](https://img.shields.io/badge/Java-17-orange.svg)
@@ -43,8 +43,8 @@ TossupCreator is a full-stack web application that automatically creates educati
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/yourusername/TossupCreator.git
-   cd TossupCreator
+   git clone https://github.com/yourusername/QBCarder.git
+   cd QBCarder
    ```
 
 2. **Start the Backend (Spring Boot)**
@@ -167,7 +167,7 @@ curl "http://localhost:8080/flashcards?topic=Cold%20War&categories=History"
 
 ### Project Structure
 ```
-TossupCreator/
+QBCarder/
 ├── backend/                    # Spring Boot backend
 │   ├── src/main/java/
 │   │   └── com/tossupflash/backend/
