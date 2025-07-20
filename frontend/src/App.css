@@ -1,0 +1,544 @@
+/* TossupFlash App Styles */
+:root {
+  --primary-color: #3b82f6;
+  --primary-hover: #2563eb;
+  --primary-light: #dbeafe;
+  --secondary-color: #f8fafc;
+  --accent-color: #6366f1;
+  --text-color: #0f172a;
+  --text-light: #64748b;
+  --text-muted: #94a3b8;
+  --border-color: #e2e8f0;
+  --border-light: #f1f5f9;
+  --error-color: #ef4444;
+  --success-color: #10b981;
+  --warning-color: #f59e0b;
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  --gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  --gradient-secondary: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+  --gradient-accent: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+  
+  /* Category Colors */
+  --category-literature: #3b82f6;
+  --category-history: #10b981;
+  --category-science: #ef4444;
+  --category-fine-arts: #f59e0b;
+  --category-secondary: #6b7280;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+  line-height: 1.6;
+  color: var(--text-color);
+  background-color: #f9fafb;
+}
+
+.app {
+  min-height: 100vh;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+/* Header Styles */
+.app-header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.app-header h1 {
+  font-size: 3rem;
+  font-weight: 700;
+  color: var(--primary-color);
+  margin-bottom: 0.5rem;
+}
+
+.app-header p {
+  font-size: 1.2rem;
+  color: var(--text-light);
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* Input Section */
+.input-section {
+  background: white;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: var(--shadow);
+  margin-bottom: 2rem;
+}
+
+.input-group {
+  display: flex;
+  gap: 1rem;
+  max-width: 800px;
+  margin: 0 auto;
+  align-items: stretch;
+}
+
+.topic-input {
+  flex: 1;
+  padding: 1rem;
+  border: 2px solid var(--border-color);
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: border-color 0.2s;
+}
+
+.topic-input:focus {
+  outline: none;
+  border-color: var(--primary-color);
+}
+
+.topic-input:disabled {
+  background-color: var(--secondary-color);
+  cursor: not-allowed;
+}
+
+.category-dropdown {
+  min-width: 200px;
+  padding: 14px 16px;
+  border: 2px solid transparent;
+  border-radius: 12px;
+  font-size: 0.95rem;
+  background: linear-gradient(white, white) padding-box,
+              linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%) border-box;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  font-weight: 600;
+  color: #374151;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 
+              0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  position: relative;
+}
+
+.category-dropdown:focus {
+  outline: none;
+  border-color: transparent;
+  background: linear-gradient(white, white) padding-box,
+              linear-gradient(135deg, #3b82f6 0%, #8b5cf6 50%, #ef4444 100%) border-box;
+  box-shadow: 0 8px 25px -8px rgba(59, 130, 246, 0.4),
+              0 0 0 3px rgba(59, 130, 246, 0.1),
+              0 0 20px rgba(59, 130, 246, 0.2);
+  transform: translateY(-1px);
+}
+
+.category-dropdown:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 28px -8px rgba(0, 0, 0, 0.15),
+              0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.category-dropdown:disabled {
+  background: var(--secondary-color);
+  cursor: not-allowed;
+  opacity: 0.6;
+  transform: none;
+}
+
+/* Enhanced category option styling */
+.category-dropdown option {
+  padding: 12px 16px;
+  font-weight: 500;
+  border-radius: 8px;
+  margin: 2px 0;
+}
+
+.category-dropdown option[value=""] {
+  background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+  color: #64748b;
+  font-weight: 600;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+/* Main Categories - Enhanced Styling */
+.category-dropdown option[value="Literature"] {
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.15) 0%, rgba(59, 130, 246, 0.05) 100%);
+  color: #1e40af;
+  font-weight: 700;
+  border-left: 4px solid #3b82f6;
+}
+
+.category-dropdown option[value="History"] {
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.15) 0%, rgba(16, 185, 129, 0.05) 100%);
+  color: #047857;
+  font-weight: 700;
+  border-left: 4px solid #10b981;
+}
+
+.category-dropdown option[value="Science"] {
+  background: linear-gradient(135deg, rgba(239, 68, 68, 0.15) 0%, rgba(239, 68, 68, 0.05) 100%);
+  color: #dc2626;
+  font-weight: 700;
+  border-left: 4px solid #ef4444;
+}
+
+.category-dropdown option[value="Fine Arts"] {
+  background: linear-gradient(135deg, rgba(245, 158, 11, 0.15) 0%, rgba(245, 158, 11, 0.05) 100%);
+  color: #d97706;
+  font-weight: 700;
+  border-left: 4px solid #f59e0b;
+}
+
+/* Secondary Categories */
+.category-dropdown option[value="Religion"],
+.category-dropdown option[value="Mythology"],
+.category-dropdown option[value="Philosophy"],
+.category-dropdown option[value="Social Science"],
+.category-dropdown option[value="Current Events"],
+.category-dropdown option[value="Geography"],
+.category-dropdown option[value="Other Academic"],
+.category-dropdown option[value="Pop Culture"] {
+  background: rgba(248, 250, 252, 0.8);
+  color: #6b7280;
+  font-weight: 500;
+  padding-left: 20px;
+}
+
+/* Add beautiful icon-like effect */
+.category-dropdown::before {
+  content: "📚";
+  position: absolute;
+  right: 45px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1.1rem;
+  opacity: 0.7;
+  pointer-events: none;
+}
+
+/* Custom dropdown arrow */
+.category-dropdown::after {
+  content: "";
+  position: absolute;
+  right: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 0;
+  height: 0;
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-top: 6px solid #6b7280;
+  pointer-events: none;
+  transition: transform 0.2s ease;
+}
+
+.category-dropdown:focus::after {
+  transform: translateY(-50%) rotate(180deg);
+  border-top-color: #3b82f6;
+}
+
+/* Enhanced focus effect with glow */
+
+/* Pulse animation when opening */
+@keyframes categoryPulse {
+  0% { box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); }
+  50% { box-shadow: 0 8px 25px -8px rgba(59, 130, 246, 0.3), 0 4px 6px -1px rgba(0, 0, 0, 0.1); }
+  100% { box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); }
+}
+
+.category-dropdown:active {
+  animation: categoryPulse 0.3s ease-in-out;
+}
+
+.generate-button {
+  padding: 1rem 2rem;
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  white-space: nowrap;
+}
+
+.generate-button:hover:not(:disabled) {
+  background-color: var(--primary-hover);
+}
+
+.generate-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.error-message {
+  color: var(--error-color);
+  background-color: #fef2f2;
+  border: 1px solid #fecaca;
+  padding: 1rem;
+  border-radius: 8px;
+  margin-top: 1rem;
+  text-align: center;
+}
+
+/* Loading Section */
+.loading-section {
+  text-align: center;
+  padding: 3rem;
+}
+
+.loading-spinner {
+  width: 48px;
+  height: 48px;
+  border: 4px solid var(--secondary-color);
+  border-top: 4px solid var(--primary-color);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin: 0 auto 1rem;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Flashcards Section */
+.flashcards-section {
+  margin-top: 3rem;
+  padding: 2rem;
+  background: white;
+  border-radius: 16px;
+  box-shadow: var(--shadow);
+}
+
+.flashcards-header {
+  text-align: center;
+  margin-bottom: 3rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 2px solid var(--secondary-color);
+}
+
+.flashcards-header h2 {
+  font-size: 2.5rem;
+  color: var(--text-color);
+  margin-bottom: 0.5rem;
+}
+
+.flashcards-subtitle {
+  font-size: 1.1rem;
+  color: var(--text-light);
+  margin: 0;
+  font-style: italic;
+}
+
+.flashcards-container {
+  padding: 1rem 0;
+}
+
+.flashcards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 2rem; /* Reduced gap since cards now have their own margin */
+  margin: 0 auto;
+  max-width: 1400px;
+  padding: 0 0.5rem; /* Reduced padding to account for card margins */
+}
+
+/* Enhanced Placeholder Section */
+.placeholder-section {
+  margin-top: 3rem;
+  padding: 3rem;
+  background: white;
+  border-radius: 16px;
+  box-shadow: var(--shadow);
+  text-align: center;
+}
+
+.placeholder-content {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.placeholder-icon {
+  font-size: 4rem;
+  margin-bottom: 1.5rem;
+}
+
+.placeholder-section h2 {
+  font-size: 2.5rem;
+  color: var(--text-color);
+  margin-bottom: 1rem;
+}
+
+.placeholder-description {
+  font-size: 1.2rem;
+  color: var(--text-light);
+  line-height: 1.6;
+  margin-bottom: 2.5rem;
+}
+
+.example-topics {
+  margin-bottom: 3rem;
+}
+
+.example-topics h3 {
+  font-size: 1.3rem;
+  color: var(--text-color);
+  margin-bottom: 1rem;
+}
+
+.topic-suggestions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  justify-content: center;
+  margin-top: 1rem;
+}
+
+.topic-tag {
+  background: linear-gradient(135deg, var(--primary-color), var(--primary-hover));
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.topic-tag:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.how-it-works h3 {
+  font-size: 1.3rem;
+  color: var(--text-color);
+  margin-bottom: 1.5rem;
+}
+
+.steps-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.5rem;
+  margin-top: 1.5rem;
+}
+
+.step {
+  background: var(--secondary-color);
+  padding: 1.5rem;
+  border-radius: 12px;
+  transition: transform 0.2s;
+}
+
+.step:hover {
+  transform: translateY(-2px);
+}
+
+.step-number {
+  width: 32px;
+  height: 32px;
+  background: var(--primary-color);
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  margin: 0 auto 0.75rem;
+}
+
+.step p {
+  margin: 0;
+  font-size: 0.95rem;
+  color: var(--text-color);
+  font-weight: 500;
+}
+
+/* Legacy instructions styles removed - replaced with enhanced placeholder section */
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .app {
+    padding: 1rem;
+  }
+  
+  .app-header h1 {
+    font-size: 2rem;
+  }
+  
+  .input-group {
+    flex-direction: column;
+  }
+  
+  .category-dropdown {
+    min-width: 100%;
+    padding: 12px 14px;
+    font-size: 0.9rem;
+  }
+  
+  .category-dropdown::before {
+    right: 40px;
+    font-size: 1rem;
+  }
+  
+  .flashcards-section {
+    padding: 1.5rem;
+    margin-top: 2rem;
+  }
+  
+  .flashcards-header h2 {
+    font-size: 2rem;
+  }
+  
+  .flashcards-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem; /* Reduced gap for mobile */
+    padding: 0;
+  }
+  
+  .placeholder-section {
+    padding: 2rem 1.5rem;
+    margin-top: 2rem;
+  }
+  
+  .placeholder-icon {
+    font-size: 3rem;
+  }
+  
+  .placeholder-section h2 {
+    font-size: 2rem;
+  }
+  
+  .topic-suggestions {
+    justify-content: center;
+  }
+  
+  .steps-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  .step {
+    padding: 1rem;
+  }
+}
+
+/* Footer Styles */
+.app-footer {
+  background: var(--card-background);
+  border-top: 1px solid var(--border-color);
+  padding: 2rem 1rem;
+  text-align: center;
+  margin-top: 4rem;
+}
+
+.app-footer p {
+  color: var(--text-light);
+  margin: 0;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
