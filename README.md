@@ -537,10 +537,3 @@ Having issues? Here's how to get help:
 1. **Check the Documentation**: Read through this README thoroughly
 2. **Search Issues**: Look through existing GitHub issues
 3. **Create an Issue**: Describe your problem with reproduction steps
-4. **Community**: Join Quiz Bowl and educational technology communities
-
----
-
-**Made with ❤️ for the educational community**
-
-*Happy studying! 📚✨*
