@@ -6,7 +6,9 @@ export default defineConfig({
   plugins: [react()],
   server: {
     proxy: {
-      '/flashcards': 'http://localhost:8080'
+      '/flashcards': 'http://localhost:8080',
+      '/auth': 'http://localhost:8080',
+      '/saved-flashcards': 'http://localhost:8080'
     }
   }
 })

@@ -2,7 +2,7 @@
 
 **Generate educational flashcards from Quiz Bowl questions and Wikipedia content**
 
-QBCarder is a full-stack web application that automatically creates educational flashcards by analyzing Quiz Bowl tossup questions and enriching them with Wikipedia summaries. Perfect for students, educators, and Quiz Bowl enthusiasts who want to study key concepts in an interactive way.
+QBCarder is a full-stack web application that automatically creates educational flashcards by analyzing Quiz Bowl tossup questions and enriching them with Wikipedia summaries. With user authentication and personal flashcard collections, it's perfect for students, educators, and Quiz Bowl enthusiasts who want to study key concepts in an interactive way.
 
 ![Version](https://img.shields.io/badge/version-1.0.0-blue.svg)
 ![Java](https://img.shields.io/badge/Java-17-orange.svg)
@@ -18,6 +18,13 @@ QBCarder is a full-stack web application that automatically creates educational 
 - **Category Filtering**: Filter by academic categories (Literature, History, Science, Fine Arts, etc.)
 - **Interactive UI**: Flip-able flashcards with smooth animations
 
+### 🔐 Authentication & Personal Collections
+- **User Registration & Login**: Secure JWT-based authentication system
+- **Personal Flashcard Library**: Save your favorite flashcards to build a personal collection
+- **Tab Navigation**: Switch between "Generate Flashcards" and "Saved Cards" views
+- **Persistent Storage**: Your saved flashcards are stored in a database and persist across sessions
+- **Collection Management**: Delete saved flashcards you no longer need
+
 ### 🧠 Smart Content Generation
 - **Advanced Phrase Extraction**: Uses TF-IDF and frequency analysis to identify key concepts
 - **Context Preservation**: Includes original Quiz Bowl question context for better understanding
@@ -26,7 +33,9 @@ QBCarder is a full-stack web application that automatically creates educational 
 
 ### 💻 Technical Features
 - **Full-Stack Architecture**: React frontend with Spring Boot backend
-- **RESTful API**: Clean API design with proper error handling
+- **JWT Authentication**: Secure token-based authentication with Spring Security
+- **Database Integration**: H2 in-memory database with JPA/Hibernate for development
+- **RESTful API**: Clean API design with proper error handling and authentication
 - **Responsive Design**: Works on desktop, tablet, and mobile devices
 - **Real-time Generation**: Fast flashcard creation with progress indicators
 - **CORS Support**: Properly configured for cross-origin requests
@@ -70,11 +79,19 @@ QBCarder is a full-stack web application that automatically creates educational 
 
 ## 📖 How to Use
 
-### Basic Usage
-1. **Enter a Topic**: Type any educational topic (e.g., "Cold War", "DNA", "Renaissance")
-2. **Select Category** (Optional): Choose from Literature, History, Science, Fine Arts, etc.
-3. **Generate**: Click "Generate Flashcards" and wait for the magic to happen
-4. **Study**: Click any flashcard to flip it and see the back with context and Wikipedia info
+### Getting Started
+1. **Register/Login**: Click "Login / Register" in the top right to create an account or sign in
+2. **Enter a Topic**: Type any educational topic (e.g., "Cold War", "DNA", "Renaissance")
+3. **Select Category** (Optional): Choose from Literature, History, Science, Fine Arts, etc.
+4. **Generate**: Click "Generate Flashcards" and wait for the magic to happen
+5. **Study**: Click any flashcard to flip it and see the back with context and Wikipedia info
+6. **Save Favorites**: Click the 💾 button on any flashcard to save it to your personal collection
+
+### Managing Your Collection
+- **View Saved Cards**: Click the "Saved Cards" tab to see your personal flashcard library
+- **Organized by Date**: Your saved flashcards are organized by when you saved them
+- **Delete Cards**: Click the 🗑️ button to remove flashcards you no longer need
+- **Topic Labels**: Each saved flashcard shows which topic it came from
 
 ### Example Topics That Work Well
 - **History**: "World War II", "American Revolution", "Cold War", "Ancient Rome"
@@ -163,6 +180,91 @@ curl "http://localhost:8080/flashcards?topic=Cold%20War&categories=History"
 ]
 ```
 
+#### `POST /auth/register`
+Register a new user account.
+
+**Request Body:**
+```json
+{
+  "username": "john_doe",
+  "email": "john@example.com",
+  "password": "securepassword123"
+}
+```
+
+**Response:**
+```json
+{
+  "token": "eyJhbGciOiJIUzI1NiJ9...",
+  "username": "john_doe"
+}
+```
+
+#### `POST /auth/login`
+Login with existing credentials.
+
+**Request Body:**
+```json
+{
+  "username": "john_doe",
+  "password": "securepassword123"
+}
+```
+
+**Response:**
+```json
+{
+  "token": "eyJhbGciOiJIUzI1NiJ9...",
+  "username": "john_doe"
+}
+```
+
+#### `POST /saved-flashcards`
+Save a flashcard to user's personal collection. **Requires authentication.**
+
+**Headers:**
+```
+Authorization: Bearer <JWT_TOKEN>
+```
+
+**Request Body:**
+```json
+{
+  "front": "Berlin Wall",
+  "back": "Context and Wikipedia summary...",
+  "topic": "Cold War"
+}
+```
+
+#### `GET /saved-flashcards`
+Get user's saved flashcards. **Requires authentication.**
+
+**Headers:**
+```
+Authorization: Bearer <JWT_TOKEN>
+```
+
+**Response:**
+```json
+[
+  {
+    "id": 1,
+    "front": "Berlin Wall",
+    "back": "Context and Wikipedia summary...",
+    "topic": "Cold War",
+    "savedAt": "2025-01-21T04:15:30"
+  }
+]
+```
+
+#### `DELETE /saved-flashcards/{id}`
+Delete a saved flashcard. **Requires authentication.**
+
+**Headers:**
+```
+Authorization: Bearer <JWT_TOKEN>
+```
+
 ## 🛠️ Development
 
 ### Project Structure
@@ -174,19 +276,29 @@ QBCarder/
 │   │       ├── BackendApplication.java
 │   │       ├── Flashcard.java
 │   │       ├── FlashcardController.java
-│   │       └── FlashcardService.java
+│   │       ├── FlashcardService.java
+│   │       ├── User.java                    # User entity
+│   │       ├── SavedFlashcard.java          # Saved flashcard entity
+│   │       ├── UserRepository.java          # User data access
+│   │       ├── SavedFlashcardRepository.java # Saved flashcard data access
+│   │       ├── AuthController.java          # Authentication endpoints
+│   │       ├── SavedFlashcardController.java # Saved flashcard endpoints
+│   │       ├── AuthService.java             # Authentication logic
+│   │       ├── JwtUtil.java                 # JWT token utilities
+│   │       ├── JwtAuthFilter.java          # JWT authentication filter
+│   │       └── SecurityConfig.java          # Spring Security configuration
 │   ├── src/main/resources/
 │   │   └── application.properties
 │   └── pom.xml
 ├── frontend/                   # React frontend
 │   ├── src/
-│   │   ├── App.jsx
-│   │   ├── App.css
-│   │   ├── Flashcard.jsx
-│   │   ├── Flashcard.css
+│   │   ├── App.jsx              # Main app with auth & tabs
+│   │   ├── App.css              # Enhanced styles with auth modal
+│   │   ├── Flashcard.jsx        # Flashcard component with save/delete
+│   │   ├── Flashcard.css        # Enhanced flashcard styles
 │   │   └── main.jsx
 │   ├── package.json
-│   └── vite.config.js
+│   └── vite.config.js           # Updated with auth proxy
 └── README.md
 ```
 
@@ -227,8 +339,11 @@ npm run lint
 **Backend (Maven)**
 - `spring-boot-starter-web`: REST API framework
 - `spring-boot-starter-webflux`: Reactive web client
+- `spring-boot-starter-data-jpa`: Database integration with Hibernate
+- `spring-boot-starter-security`: Authentication and authorization
+- `h2`: In-memory database for development
+- `jjwt-api`, `jjwt-impl`, `jjwt-jackson`: JWT token handling
 - `spring-boot-devtools`: Development tools
-- `jackson-databind`: JSON processing
 
 **Frontend (npm)**
 - `react`: UI library
@@ -262,6 +377,21 @@ Modify `backend/src/main/resources/application.properties`:
 ```properties
 server.port=8080
 spring.application.name=backend
+
+# H2 Database Configuration
+spring.datasource.url=jdbc:h2:mem:qbcarder
+spring.datasource.driverClassName=org.h2.Driver
+spring.datasource.username=sa
+spring.datasource.password=
+
+# JPA Configuration
+spring.jpa.database-platform=org.hibernate.dialect.H2Dialect
+spring.jpa.hibernate.ddl-auto=create-drop
+spring.jpa.show-sql=true
+
+# H2 Console (for development)
+spring.h2.console.enabled=true
+spring.h2.console.path=/h2-console
 ```
 
 ## 🌐 Deployment
@@ -306,19 +436,22 @@ npm run build
 ## 📚 Educational Use Cases
 
 ### For Students
-- **Study Aid**: Create flashcards for any subject you're learning
-- **Quiz Bowl Prep**: Practice with real Quiz Bowl content
+- **Study Aid**: Create and save flashcards for any subject you're learning
+- **Quiz Bowl Prep**: Practice with real Quiz Bowl content and build your question bank
 - **Concept Review**: Get Wikipedia summaries for deeper understanding
+- **Personal Library**: Build a curated collection of flashcards across multiple topics
 
 ### For Educators
-- **Classroom Tool**: Generate flashcards for lesson topics
-- **Assessment Prep**: Help students review key concepts
-- **Curriculum Support**: Supplement existing materials
+- **Classroom Tool**: Generate flashcards for lesson topics and save class sets
+- **Assessment Prep**: Help students review key concepts with saved flashcard collections
+- **Curriculum Support**: Supplement existing materials with Quiz Bowl-quality content
+- **Student Progress**: Track what topics students are studying through their saved cards
 
 ### For Quiz Bowl Teams
-- **Training Tool**: Practice with actual tournament questions
-- **Topic Exploration**: Discover related concepts and facts
-- **Strategy Development**: Understand question patterns and clues
+- **Training Tool**: Practice with actual tournament questions and save difficult concepts
+- **Topic Exploration**: Discover related concepts and facts, building comprehensive study sets
+- **Strategy Development**: Understand question patterns and clues through saved examples
+- **Team Collaboration**: Share and discuss saved flashcards among team members
 
 ## 🔧 Troubleshooting
 
@@ -347,8 +480,14 @@ npm run build
 
 ## 📋 Roadmap
 
-### Planned Features
-- [ ] **User Authentication**: Save and manage personal flashcard collections
+### Completed Features ✅
+- [x] **User Authentication**: Save and manage personal flashcard collections
+- [x] **Personal Library**: View, organize, and delete saved flashcards
+- [x] **Tab Navigation**: Switch between generating and viewing saved cards
+- [x] **Persistent Storage**: Database-backed flashcard storage
+- [x] **JWT Security**: Secure token-based authentication
+
+### Planned Features 🚧
 - [ ] **Export Options**: PDF, Anki, and other formats
 - [ ] **Difficulty Levels**: Beginner, intermediate, and advanced content
 - [ ] **Spaced Repetition**: Smart review scheduling
@@ -356,14 +495,23 @@ npm run build
 - [ ] **Analytics**: Track study progress and performance
 - [ ] **Mobile App**: Native iOS and Android applications
 - [ ] **Offline Mode**: Study without internet connection
+- [ ] **Flashcard Categories**: Organize saved cards by subject
+- [ ] **Search Functionality**: Find specific flashcards in your collection
 
-### Technical Improvements
-- [ ] **Database Integration**: Persistent data storage
+### Technical Improvements Completed ✅
+- [x] **Database Integration**: H2 database with JPA/Hibernate
+- [x] **Authentication System**: JWT-based security with Spring Security
+- [x] **RESTful API**: Full CRUD operations for flashcards and users
+
+### Technical Improvements Planned 🚧
+- [ ] **Production Database**: PostgreSQL or MySQL for production deployment
 - [ ] **Caching**: Improve performance with Redis
 - [ ] **API Rate Limiting**: Prevent abuse
 - [ ] **Enhanced NLP**: Better phrase extraction algorithms
-- [ ] **Search Functionality**: Find existing flashcards
+- [ ] **Search Functionality**: Full-text search across saved flashcards
 - [ ] **Batch Processing**: Generate multiple topics at once
+- [ ] **Email Verification**: Verify user email addresses during registration
+- [ ] **Password Reset**: Allow users to reset forgotten passwords
 
 ## 📄 License
 
